@@ -1,7 +1,5 @@
 from pathlib import Path
 
-from click.testing import CliRunner
-
 from bulk_file_renamer.cli import main
 
 
@@ -9,7 +7,10 @@ def test_cli_dry_run_does_not_modify_files(tmp_path: Path, monkeypatch) -> None:
     file_path = tmp_path / "photo.jpg"
     file_path.write_text("image")
 
-    monkeypatch.setattr("sys.argv", ["bulk-renamer", str(tmp_path), "--prefix", "trip_", "--dry-run"])
+    monkeypatch.setattr(
+        "sys.argv",
+        ["bulk-renamer", str(tmp_path), "--prefix", "trip_", "--dry-run"],
+    )
 
     assert main() == 0
     assert file_path.exists()
